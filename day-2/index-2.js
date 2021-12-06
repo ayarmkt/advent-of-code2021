@@ -1,20 +1,17 @@
 const { stringArr } = require('./input');
-//import { stringArr } from './input.js';
-console.log(stringArr);
-
-//const sample = ['forward 4', 'up 9', 'forward 2', 'forward 2', 'down 7'];
 
 const getPosition = (arr) => {
-  let position = { horizontalPosition: 0, depth: 0 };
+  let position = { horizontalPosition: 0, depth: 0, aim: 0 };
 
   arr.map((action) => {
     let move = parseInt(action.split(' ')[1]);
     if (action.includes('forward')) {
       position.horizontalPosition += move;
+      position.depth += position.aim * move;
     } else if (action.includes('down')) {
-      position.depth += move;
+      position.aim += move;
     } else {
-      position.depth -= move;
+      position.aim -= move;
     }
   });
 
