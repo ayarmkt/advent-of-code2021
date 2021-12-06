@@ -2,6 +2,7 @@
 import { stringArr } from './input.js';
 console.log(stringArr);
 
+//
 // const forward = ([x, y], forward) => {
 //   return [x + forward, y];
 // };

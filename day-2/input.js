@@ -5,7 +5,7 @@
 // module.exports = { stringArr };
 
 //ERROR:Uncaught TypeError: Failed to resolve module specifier "fs". Relative references must start with either "/", "./", or "../".
-import fs from 'fs';
 //import * as fs from 'fs';
+import fs from 'fs';
 const text = fs.readFileSync('./input.txt').toString('utf-8');
 export const stringArr = text.split('\n');
