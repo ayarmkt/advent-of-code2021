@@ -1,19 +1,26 @@
-//const { stringArr } = require('./input');
-import { stringArr } from './input.js';
+const { stringArr } = require('./input');
+//import { stringArr } from './input.js';
 console.log(stringArr);
 
-//
-// const forward = ([x, y], forward) => {
-//   return [x + forward, y];
-// };
+//const sample = ['forward 4', 'up 9', 'forward 2', 'forward 2', 'down 7'];
 
-// const down = ([x, y], down) => {
-//   return [x, y + down];
-// };
-// const up = ([x, y], up) => {
-//   return [x, y - up];
-// };
+const getPosition = (arr) => {
+  let position = { horizontalPosition: 0, depth: 0 };
 
-// console.log(stringArr);
+  arr.map((action) => {
+    let move = parseInt(action.split(' ')[1]);
+    if (action.includes('forward')) {
+      position.horizontalPosition += move;
+    } else if (action.includes('down')) {
+      position.depth += move;
+    } else {
+      position.depth -= move;
+    }
+  });
 
-// const getPosition = ([x, y]) => {};
+  const answer = position['horizontalPosition'] * position['depth'];
+  console.log(answer);
+  return answer;
+};
+
+getPosition(stringArr);
