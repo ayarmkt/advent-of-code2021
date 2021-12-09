@@ -1,20 +1,4 @@
-const { stringArr } = require('./input');
-
-//wrong answer 98081, 99832
-
-const exampleArr = [
-  { start: [959, 103], end: [139, 923] },
-  { start: [2, 0], end: [2, 5] },
-  { start: [2, 0], end: [2, 100] },
-  { start: [2, 1], end: [2, 2] },
-  { start: [50, 5], end: [55, 5] },
-  { start: [0, 5], end: [100, 5] },
-];
-
-//overlap vertical [2, 0],[2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 1], [2, 2], [2, 1], [2, 2],
-//overlap horizontal [50, 5], [51, 5], [52, 5], [53, 5], [54, 5], [55, 5]
-//crossing [2, 5], [2, 5]
-//answer [2, 0]: 1,[2, 1]: 3, [2, 2]: 3, [2, 3]: 1, [2, 4]: 1, [2, 5]: 3, [50, 5], [51, 5], [52, 5], [53, 5], [54, 5], [55, 5]
+const { stringArr, exampleStringArr } = require('./input');
 
 const isVertical = (line) => {
   return line['start'][0] === line['end'][0];
@@ -75,8 +59,10 @@ const getOverlappingPoint = (line1, line2, type) => {
       const min = Math.max(firstLine.x.min, secondLine.x.min);
       const max = Math.min(firstLine.x.max, secondLine.x.max);
 
-      for (let i = min; i <= max; i++) {
-        overlappingPoint.push([i, firstLine.y]);
+      if (firstLine.y === secondLine.y) {
+        for (let i = min; i <= max; i++) {
+          overlappingPoint.push([i, firstLine.y]);
+        }
       }
       break;
     }
@@ -87,8 +73,10 @@ const getOverlappingPoint = (line1, line2, type) => {
       const min = Math.max(firstLine.y.min, secondLine.y.min);
       const max = Math.min(firstLine.y.max, secondLine.y.max);
 
-      for (let i = min; i <= max; i++) {
-        overlappingPoint.push([firstLine.x, i]);
+      if (firstLine.x === secondLine.x) {
+        for (let i = min; i <= max; i++) {
+          overlappingPoint.push([firstLine.x, i]);
+        }
       }
       break;
     }
@@ -110,9 +98,6 @@ const checkForMatches = (arr) => {
       horizontalLine.push(line);
     }
   });
-
-  //console.log('horizontal', horizontalLine);
-  //console.log('vertical', verticalLine);
 
   //get overlapping points
   let overlapingPoints = [];
@@ -157,16 +142,13 @@ const checkForMatches = (arr) => {
     }
   }
 
-  console.log('overlapingPoints', overlapingPoints.length);
-
   //get unique overlapping points
   const uniqueOverlappingPoints = [
     ...new Set(overlapingPoints.map((arr) => arr.toString())),
   ];
 
-  console.log('uniqueOverlappingPoints', uniqueOverlappingPoints);
   console.log('uniqueOverlappingPoints', uniqueOverlappingPoints.length);
 };
 
-//checkForMatches(exampleArr);
+//checkForMatches(exampleStringArr);
 checkForMatches(stringArr);
