@@ -9,11 +9,16 @@ const getMaxRange = (arr, index) => {
 const getOverlappingPoints = (arr) => {
   const horizontalLines = [];
   const verticalLines = [];
+  const diagonalLines = [];
   arr.map((line) => {
     if (line[0][0] === line[1][0]) {
       verticalLines.push(line);
     } else if (line[0][1] === line[1][1]) {
       horizontalLines.push(line);
+    } else if (
+      Math.abs(line[0][0] - line[1][0]) === Math.abs(line[0][1] - line[1][1])
+    ) {
+      diagonalLines.push(line);
     }
   });
 
@@ -46,6 +51,30 @@ const getOverlappingPoints = (arr) => {
     } else if (line[0][1] < line[1][1]) {
       for (let i = line[0][1]; i <= line[1][1]; i++) {
         matrix[i][line[0][0]]++;
+      }
+    }
+  }
+
+  //diagonal move
+  for (const line of diagonalLines) {
+    const moveX = line[1][0] - line[0][0];
+    const moveY = line[1][1] - line[0][1];
+
+    if (moveX > 0 && moveY > 0) {
+      for (let i = 0; i <= Math.abs(moveX); i++) {
+        matrix[line[0][1] + i][line[0][0] + i]++;
+      }
+    } else if (moveX > 0 && moveY < 0) {
+      for (let i = 0; i <= Math.abs(moveX); i++) {
+        matrix[line[0][1] - i][line[0][0] + i]++;
+      }
+    } else if (moveX < 0 && moveY > 0) {
+      for (let i = 0; i <= Math.abs(moveX); i++) {
+        matrix[line[0][1] + i][line[0][0] - i]++;
+      }
+    } else if (moveX < 0 && moveY < 0) {
+      for (let i = 0; i <= Math.abs(moveX); i++) {
+        matrix[line[0][1] - i][line[0][0] - i]++;
       }
     }
   }
